@@ -315,7 +315,8 @@ mod tests {
         let vec = CounterVec::new(
             Opts::new("test_couter_vec", "test counter vec help"),
             &["l1", "l2"],
-        ).unwrap();
+        )
+        .unwrap();
 
         let mut labels = HashMap::new();
         labels.insert("l1", "v1");
@@ -345,7 +346,8 @@ mod tests {
         let vec = CounterVec::new(
             Opts::new("test_vec", "test counter vec help"),
             &["l1", "l2"],
-        ).unwrap();
+        )
+        .unwrap();
 
         assert!(vec.remove_label_values(&["v1", "v2"]).is_err());
         vec.with_label_values(&["v1", "v2"]).inc();
@@ -361,7 +363,8 @@ mod tests {
         let vec = GaugeVec::new(
             Opts::new("test_gauge_vec", "test gauge vec help"),
             &["l1", "l2"],
-        ).unwrap();
+        )
+        .unwrap();
 
         let mut labels = HashMap::new();
         labels.insert("l1", "v1");
@@ -383,7 +386,8 @@ mod tests {
         let vec = GaugeVec::new(
             Opts::new("test_gauge_vec", "test gauge vec help"),
             &["l1", "l2"],
-        ).unwrap();
+        )
+        .unwrap();
 
         assert!(vec.remove_label_values(&["v1", "v2"]).is_err());
         vec.with_label_values(&["v1", "v2"]).inc();
@@ -404,7 +408,8 @@ mod tests {
         let vec = CounterVec::new(
             Opts::new("test_vec", "test counter vec help"),
             &["b", "c", "a"],
-        ).unwrap();
+        )
+        .unwrap();
 
         // create a new metric that labels are {b" => "c", "c" => "a" "a" => "b"}.
         let mut labels = HashMap::new();

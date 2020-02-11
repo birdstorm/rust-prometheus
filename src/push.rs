@@ -17,8 +17,8 @@ use std::hash::BuildHasher;
 use std::str::{self, FromStr};
 use std::time::Duration;
 
-use hyper::client::Client;
 use hyper::client::pool::Config;
+use hyper::client::Client;
 use hyper::header::ContentType;
 use hyper::method::Method;
 use hyper::status::StatusCode;
@@ -228,20 +228,20 @@ pub fn hostname_grouping_key() -> HashMap<String, String> {
     } {
         0 => {
             let last_char = name.iter().position(|byte| *byte == 0).unwrap_or(max_len);
-            labels!{
+            labels! {
                 DEFAULT_GROUP_LABEL_PAIR.0.to_owned() => str::from_utf8(&name[..last_char])
                                             .unwrap_or(DEFAULT_GROUP_LABEL_PAIR.1).to_owned(),
             }
         }
         _ => {
-            labels!{DEFAULT_GROUP_LABEL_PAIR.0.to_owned() => DEFAULT_GROUP_LABEL_PAIR.1.to_owned(),}
+            labels! {DEFAULT_GROUP_LABEL_PAIR.0.to_owned() => DEFAULT_GROUP_LABEL_PAIR.1.to_owned(),}
         }
     }
 }
 
 #[cfg(target_os = "windows")]
 pub fn hostname_grouping_key() -> HashMap<String, String> {
-    labels!{DEFAULT_GROUP_LABEL_PAIR.0.to_owned() => DEFAULT_GROUP_LABEL_PAIR.1.to_owned(),}
+    labels! {DEFAULT_GROUP_LABEL_PAIR.0.to_owned() => DEFAULT_GROUP_LABEL_PAIR.1.to_owned(),}
 }
 
 #[cfg(test)]

@@ -361,7 +361,8 @@ mod tests {
         let vec = CounterVec::new(
             Opts::new("test_couter_vec", "test counter vec help"),
             &["l1", "l2"],
-        ).unwrap();
+        )
+        .unwrap();
 
         let mut labels = HashMap::new();
         labels.insert("l1", "v1");
@@ -413,7 +414,8 @@ mod tests {
         let vec = CounterVec::new(
             Opts::new("test_vec", "test counter vec help"),
             &["l1", "l2"],
-        ).unwrap();
+        )
+        .unwrap();
 
         assert!(vec.remove_label_values(&["v1", "v2"]).is_err());
         vec.with_label_values(&["v1", "v2"]).inc();
@@ -429,7 +431,8 @@ mod tests {
         let vec = CounterVec::new(
             Opts::new("test_vec_local", "test counter vec help"),
             &["l1", "l2"],
-        ).unwrap();
+        )
+        .unwrap();
         let mut local_vec_1 = vec.local();
         let mut local_vec_2 = local_vec_1.clone();
 

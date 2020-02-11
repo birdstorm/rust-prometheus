@@ -59,7 +59,7 @@ impl TokensBuilder {
                 let builder_context = MetricBuilderContext::new(metric, enum_definitions, i);
                 let code_struct = builder_context.build_struct();
                 let code_impl = builder_context.build_impl();
-                quote!{
+                quote! {
                     #code_struct
                     #code_impl
                 }
@@ -74,7 +74,7 @@ impl TokensBuilder {
         let metric_type = &metric.metric_type;
         let metric_vec_type = util::get_metric_vec_type(metric_type);
 
-        quote!{
+        quote! {
             #visibility use self::#scope_name::#struct_name;
 
             #[allow(dead_code)]
@@ -134,14 +134,15 @@ impl<'a> MetricBuilderContext<'a> {
     fn build_struct(&self) -> Tokens {
         let struct_name = &self.struct_name;
 
-        let field_names: Vec<_> = self.label
+        let field_names: Vec<_> = self
+            .label
             .get_values(self.enum_definitions)
             .iter()
             .map(|v| &v.name)
             .collect();
         let member_types: Vec<_> = field_names.iter().map(|_| &self.member_type).collect();
 
-        quote!{
+        quote! {
             #[allow(missing_copy_implementations)]
             pub struct #struct_name {
                 #(
@@ -155,7 +156,7 @@ impl<'a> MetricBuilderContext<'a> {
         let struct_name = &self.struct_name;
         let impl_from = self.build_impl_from();
         let impl_get_by_label = self.build_impl_get();
-        quote!{
+        quote! {
             impl #struct_name {
                 #impl_from
                 #impl_get_by_label
@@ -172,7 +173,7 @@ impl<'a> MetricBuilderContext<'a> {
             .collect();
         let body = self.build_impl_from_body(prev_labels_ident.clone());
 
-        quote!{
+        quote! {
             pub fn from(
                 #(
                     #prev_labels_ident: &str,
@@ -188,7 +189,8 @@ impl<'a> MetricBuilderContext<'a> {
 
     fn build_impl_from_body(&self, prev_labels_ident: Vec<Ident>) -> Tokens {
         let member_type = &self.member_type;
-        let bodies: Vec<_> = self.label
+        let bodies: Vec<_> = self
+            .label
             .get_values(self.enum_definitions)
             .iter()
             .map(|value| {
@@ -202,7 +204,7 @@ impl<'a> MetricBuilderContext<'a> {
                         .map(|(i, _)| &self.metric.labels[i].label_key)
                         .collect();
                     let prev_labels_ident = prev_labels_ident.clone();
-                    quote!{
+                    quote! {
                         #name: m.with(&{
                             let mut coll = HashMap::new();
                             #(
@@ -214,7 +216,7 @@ impl<'a> MetricBuilderContext<'a> {
                     }
                 } else {
                     let prev_labels_ident = prev_labels_ident.clone();
-                    quote!{
+                    quote! {
                         #name: #member_type::from(
                             #(
                                 #prev_labels_ident,
@@ -226,7 +228,7 @@ impl<'a> MetricBuilderContext<'a> {
                 }
             })
             .collect();
-        quote!{
+        quote! {
             #(
                 #bodies
             )*
@@ -238,7 +240,7 @@ impl<'a> MetricBuilderContext<'a> {
         let values = self.label.get_values(self.enum_definitions);
         let values_str: Vec<_> = values.iter().map(|v| &v.value).collect();
         let names_ident: Vec<_> = values.iter().map(|v| &v.name).collect();
-        quote!{
+        quote! {
             pub fn get(&self, value: &str) -> Option<&#member_type> {
                 match value {
                     #(

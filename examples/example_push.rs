@@ -30,11 +30,13 @@ lazy_static! {
     static ref PUSH_COUNTER: Counter = register_counter!(
         "example_push_total",
         "Total number of prometheus client pushed."
-    ).unwrap();
+    )
+    .unwrap();
     static ref PUSH_REQ_HISTOGRAM: Histogram = register_histogram!(
         "example_push_request_duration_seconds",
         "The push request latencies in seconds."
-    ).unwrap();
+    )
+    .unwrap();
 }
 
 #[cfg(feature = "push")]
@@ -67,10 +69,11 @@ fn main() {
         let _timer = PUSH_REQ_HISTOGRAM.start_timer(); // drop as observe
         prometheus::push_metrics(
             "example_push",
-            labels!{"instance".to_owned() => "HAL-9000".to_owned(),},
+            labels! {"instance".to_owned() => "HAL-9000".to_owned(),},
             &address,
             metric_familys,
-        ).unwrap();
+        )
+        .unwrap();
     }
 
     println!("Okay, please check the Pushgateway.");
