@@ -180,7 +180,7 @@ macro_rules! register_counter {
     }};
 
     ($NAME:expr, $HELP:expr) => {{
-        let tiflash_name = format!("tiflash_proxy_{}", $NAME);
+        let tiflash_name = concat!("tiflash_proxy_", $NAME);
         register_counter!(opts!(tiflash_name, $HELP))
     }};
 }
@@ -195,7 +195,7 @@ macro_rules! register_int_counter {
     }};
 
     ($NAME:expr, $HELP:expr) => {{
-        let tiflash_name = format!("tiflash_proxy_{}", $NAME);
+        let tiflash_name = concat!("tiflash_proxy_", $NAME);
         register_int_counter!(opts!(tiflash_name, $HELP))
     }};
 }
@@ -231,7 +231,7 @@ macro_rules! register_counter_vec {
     }};
 
     ($NAME:expr, $HELP:expr, $LABELS_NAMES:expr) => {{
-        let tiflash_name = format!("tiflash_proxy_{}", $NAME);
+        let tiflash_name = concat!("tiflash_proxy_", $NAME);
         register_counter_vec!(opts!(tiflash_name, $HELP), $LABELS_NAMES)
     }};
 }
@@ -246,7 +246,7 @@ macro_rules! register_int_counter_vec {
     }};
 
     ($NAME:expr, $HELP:expr, $LABELS_NAMES:expr) => {{
-        let tiflash_name = format!("tiflash_proxy_{}", $NAME);
+        let tiflash_name = concat!("tiflash_proxy_", $NAME);
         register_int_counter_vec!(opts!(tiflash_name, $HELP), $LABELS_NAMES)
     }};
 }
@@ -282,7 +282,7 @@ macro_rules! register_gauge {
     }};
 
     ($NAME:expr, $HELP:expr) => {{
-        let tiflash_name = format!("tiflash_proxy_{}", $NAME);
+        let tiflash_name = concat!("tiflash_proxy_", $NAME);
         register_gauge!(opts!(tiflash_name, $HELP))
     }};
 }
@@ -297,7 +297,7 @@ macro_rules! register_int_gauge {
     }};
 
     ($NAME:expr, $HELP:expr) => {{
-        let tiflash_name = format!("tiflash_proxy_{}", $NAME);
+        let tiflash_name = concat!("tiflash_proxy_", $NAME);
         register_int_gauge!(opts!(tiflash_name, $HELP))
     }};
 }
@@ -333,7 +333,7 @@ macro_rules! register_gauge_vec {
     }};
 
     ($NAME:expr, $HELP:expr, $LABELS_NAMES:expr) => {{
-        let tiflash_name = format!("tiflash_proxy_{}", $NAME);
+        let tiflash_name = concat!("tiflash_proxy_", $NAME);
         register_gauge_vec!(opts!(tiflash_name, $HELP), $LABELS_NAMES)
     }};
 }
@@ -348,7 +348,7 @@ macro_rules! register_int_gauge_vec {
     }};
 
     ($NAME:expr, $HELP:expr, $LABELS_NAMES:expr) => {{
-        let tiflash_name = format!("tiflash_proxy_{}", $NAME);
+        let tiflash_name = concat!("tiflash_proxy_", $NAME);
         register_int_gauge_vec!(opts!(tiflash_name, $HELP), $LABELS_NAMES)
     }};
 }
@@ -379,10 +379,10 @@ macro_rules! register_histogram {
         register_histogram!(histogram_opts!($NAME, $HELP))
     };
 
-    ($NAME:expr, $HELP:expr, $BUCKETS:expr) => {
-        let tiflash_name = format!("tiflash_proxy_{}", $NAME);
+    ($NAME:expr, $HELP:expr, $BUCKETS:expr) => {{
+        let tiflash_name = concat!("tiflash_proxy_", $NAME);
         register_histogram!(histogram_opts!(tiflash_name, $HELP, $BUCKETS))
-    };
+    }};
 
     ($HOPTS:expr) => {{
         let histogram = $crate::Histogram::with_opts($HOPTS).unwrap();
@@ -420,12 +420,12 @@ macro_rules! register_histogram_vec {
     }};
 
     ($NAME:expr, $HELP:expr, $LABELS_NAMES:expr) => {{
-        let tiflash_name = format!("tiflash_proxy_{}", $NAME);
+        let tiflash_name = concat!("tiflash_proxy_", $NAME);
         register_histogram_vec!(histogram_opts!(tiflash_name, $HELP), $LABELS_NAMES)
     }};
 
     ($NAME:expr, $HELP:expr, $LABELS_NAMES:expr, $BUCKETS:expr) => {{
-        let tiflash_name = format!("tiflash_proxy_{}", $NAME);
+        let tiflash_name = concat!("tiflash_proxy_", $NAME);
         register_histogram_vec!(
             histogram_opts!(tiflash_name, $HELP, $BUCKETS),
             $LABELS_NAMES
